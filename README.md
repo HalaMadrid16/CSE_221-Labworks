@@ -18,12 +18,11 @@ This repository includes implementations of algorithms and problem-solving tasks
 - Sorting algorithms (Merge Sort, Quick Sort, etc.)
 - Searching algorithms
 - Graph algorithms (BFS, DFS, MST)
-- Greedy algorithms (Huffman Coding, Activity Selection, etc.)
+- Greedy algorithms (Dijktra, kruskal's algorithm)
 - Divide and Conquer techniques
-- Dynamic Programming
 - And more!
 
-Each lab task is organized by week and includes well-documented code in C/C++/Python (based on what you used).
+Each lab task is organized by week and includes well-documented code in Python.
 
 ---
 
