@@ -1,42 +1,32 @@
-v,e,s,d=map(int,input().split())
-adj_list=[[] for i in range(v)]
-if e==0:
-    print(0)
-    print(1)
-else:
-    color=[0]*v
-    parent=[None]*v
-    u=list(map(int,input().split()))
-    w=list(map(int,input().split()))
-    for i in range(e):
-        adj_list[u[i]-1].append(w[i]-1)
-        adj_list[w[i]-1].append(u[i]-1)
-    for i in range(v):
-        adj_list[i].sort()
-
-    q=[]
-    q.append(s-1)
-    color[s-1]=1
+from collections import deque
+n=int(input())
+x_i,y_i,x_f,y_f=map(int,input().split())
+x_i-=1
+x_f-=1
+y_i-=1
+y_f-=1
+visit=[[-1]*n for i in range(n)]
+moves=[
+        (2, 1), (1, 2),
+        (-1, 2), (-2, 1),
+        (-2, -1), (-1, -2),
+        (1, -2), (2, -1) ]
+q=deque()
+def bfs():
     while len(q)>0:
-        x=q.pop(0)
-        for y in adj_list[x]:
-            if color[y]==0:
-                color[y]=1
-                parent[y]=x
-                q.append(y)
-                if y==d-1:
-                    break
-    if parent[d-1]==None:
-        print(-1)
-    else:
-        lst=[]
-        p=parent[d-1]
-        lst.append(d-1)
-        while p!=(s-1):
-            lst.append(p)
-            p=parent[p]
-        lst.append(p)
-        print(len(lst)-1)
-        for i in range(len(lst)-1,-1,-1):
-            print(lst[i]+1,end=' ')
-
+        v=q.popleft()
+        if v==(x_f,y_f):
+            return visit[v[0]][v[1]]
+        for dx,dy in moves:
+            new_x=v[0]+dx
+            new_y=v[1]+dy
+            if 0<=new_x<n and 0<=new_y<n:
+                pos=(new_x,new_y)
+                if visit[new_x][new_y]==-1:
+                    visit[new_x][new_y]=visit[v[0]][v[1]] +1
+                    q.append(pos)
+    return -1
+q.append((x_i,y_i))
+visit[x_i][y_i]=0
+res=bfs()
+print(res)

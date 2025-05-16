@@ -1,19 +1,32 @@
-v,e=map(int,input().split())
-adj_list=[[] for i in range(v)]
-color=[0]*v
-for i in range(e):
+import sys
+sys.setrecursionlimit(10**6)
+m,n=map(int,input().split())
+adj_list=[[] for i in range(m+1)]
+color=[0]*(m+1)
+for i in range(n):
     u,v=map(int,input().split())
-    adj_list[u-1].append(v)
-    adj_list[v-1].append(u)
-q=[]
-q.append(0)
-color[0]=1
-print(1,end=' ')
-while len(q)>0:
-    u=q.pop(0)
-    for v in range(len(adj_list[u])):
-        if color[adj_list[u][v]-1]==0:
-            color[adj_list[u][v]-1]=1
-            print(adj_list[u][v],end=' ')
-            q.append(adj_list[u][v]-1)
+    adj_list[u].append(v)
+lst=[]
+def dfs(g,u):
+    global lst
+    color[u]=1
+    for i in g[u]:
+        if color[i]==1:
+            return True
+        elif color[i]==0:
+            x=dfs(g,i)
+            if x:
+                return x
+    color[u]=2
+    lst.append(u)
+    return False
 
+for i in range(m):
+    if color[i+1]==0:
+        y=dfs(adj_list,i+1)
+        if y:
+            print(-1)
+            break
+if not y:
+    for i in range(len(lst)-1,-1,-1):
+        print(lst[i],end=' ')

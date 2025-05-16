@@ -1,18 +1,27 @@
-import sys
-sys.setrecursionlimit(2*100000+5)
 v,e=map(int,input().split())
-adj_list=[[] for i in range(v)]
-color=[0]*v
-u=list(map(int,input().split()))
-n=list(map(int,input().split()))    
-for i in range(len(u)):
-    adj_list[u[i]-1].append(n[i]-1)
-    adj_list[n[i]-1].append(u[i]-1)
-def dfs(g,u):
-    color[u]=1
-    print(u+1,end=' ')
-    for v in range(len(g[u])):
-        if color[g[u][v]]==0:
-            dfs(g,g[u][v])
-
-dfs(adj_list,0)
+adj_list=[[] for i in range(v+1)]
+for i in range(e):
+    u,w=map(int,input().split())
+    adj_list[u].append(w)
+    adj_list[w].append(u)
+color=[-1]*(v+1)
+q=[]
+total=0
+for i in range(1,v+1):
+    if color[i]==-1:
+        q.append(i)
+        color[i]=0
+        c0,c1=1,0
+        while len(q)>0:
+            x=q.pop(0)
+            curr_color=color[x]
+            for i in adj_list[x]:
+                if color[i]==-1:
+                    color[i]=1-curr_color
+                    if color[i]==0:
+                        c0+=1
+                    else:
+                        c1+=1
+                    q.append(i)
+        total+=max(c0,c1)
+print(total)
