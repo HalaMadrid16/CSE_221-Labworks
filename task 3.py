@@ -1,11 +1,13 @@
-var=input().split()
-n=int(var[1])
-lst=list(map(int,input().split()))
-l,curr,best=-1,0,0
-for i in range(int(var[0])):
-    curr+=lst[i]
-    while curr>n:
-        l+=1
-        curr-=lst[l]
-    best=max(best,i-l)
-print(best)
+var=list(map(int,input().split()))
+a=var[0]
+b=var[1]
+def fastmod(a,b):
+    if b==1:
+        return a%107
+    if b%2==0:
+        div=fastmod(a,b//2)
+        return (div)**2%107
+    else:
+        div=fastmod(a,b-1)
+        return (div*a)%107
+print(fastmod(a,b))

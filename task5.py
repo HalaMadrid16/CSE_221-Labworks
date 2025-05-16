@@ -1,18 +1,17 @@
-var=input().split()
-n=int(var[1])
-lst=list(map(int,input().split()))
-for i in range(n):
-    pair=list(map(int,input().split()))
-    min=pair[0]
-    max=pair[1]
-    right=0
-    left=len(lst)-1
-    while lst[right]<min and lst[left]>max:
-        right+=1
-        left-=1
-    while lst[left]>max:
-        left-=1
-    while lst[right]<min:
-        right+=1
-    print(left-right+1)
-
+def bst(arr,lst):
+    if len(arr)==1:
+        lst.append(arr[0])
+        return lst
+    if len(arr)==0:
+        return lst
+    mid=len(arr)//2
+    lst.append(arr[mid])
+    bst(arr[:mid],lst)
+    bst(arr[mid+1:],lst)
+    return lst
+var=int(input())
+arr=list(map(int,input().split()))
+lst=[]
+lst=bst(arr,lst)
+for i in range(len(lst)):
+    print(lst[i],end=' ')
